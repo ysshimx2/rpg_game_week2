@@ -14,12 +14,14 @@ class Character {
     monster.health -= attackPower;
     if (monster.health < 0) monster.health = 0;
     print('$name이(가) ${monster.name}에게 $attackPower의 데미지를 입혔습니다.');
+    print('');
   }
 
   void defend() {
     int recoverHealth = (defensePower ~/ 2);
     health += recoverHealth;
     print('$name이(가) 방어 태세를 취하여 $recoverHealth 만큼 체력을 얻었었습니다.');
+    print('');
   }
 
   void showStatus() {
@@ -44,6 +46,7 @@ class Monster {
     int damage = max(attackPower - character.defensePower, 0);
     character.health -= damage;
     if (character.health < 0) character.health = 0;
+    print('$name의 턴');
     print('$name이(가) ${character.name}에게 $attackPower의 데미지를 입혔습니다.');
   }
 
@@ -66,6 +69,8 @@ class Game {
   //게임 클래스 정의 및 진행 방식 정의 시작
   void startGame() {
     print('게임을 시작합니다!');
+    character.showStatus();
+    print('');
     while (character.health > 0 && defeatedMonsters < monstersToDefeat) {
       Monster monster = getRandomMonster();
       print('새로운 몬스터가 나타났습니다!');
@@ -96,9 +101,10 @@ class Game {
 
   void battle(Monster monster) {
     while (character.health > 0 && monster.health > 0) {
-      character.showStatus();
+      //character.showStatus();
       monster.showStatus();
-
+      print('');
+      print('${character.name}의 턴');
       stdout.write('행동을 선택하세요 (1: 공격, 2: 방어) :');
       String? choice = stdin.readLineSync();
       if (choice == '1') {
@@ -111,6 +117,7 @@ class Game {
       } //1선택시 공격, 2선택시 방어, 그 외 입력시 에러 메세지 출력
       if (monster.health > 0) {
         monster.attackCharacter(character);
+        character.showStatus();
       } else {
         print('${monster.name}을(를) 물리쳤습니다!');
         monsterList.remove(monster);
