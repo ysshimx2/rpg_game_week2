@@ -168,6 +168,12 @@ class Game {
   String getCharacterName() {
     stdout.write('캐릭터의 이름을 입력하세요: ');
     String? name = stdin.readLineSync();
-    return name ?? '이름 없음';
-  } //캐릭터 이름 입력받기
+    if (name == null ||
+        name.isEmpty ||
+        !RegExp(r'^[a-zA-Z가-힣]+$').hasMatch(name)) {
+      print('잘못된 입력입니다. 한글 또는 영문 대소문자만 입력하세요.');
+    } else {
+      return name;
+    }
+  } //한글 또는 영문 대소문자만 캐릭터 이름으로 입력받기
 }
