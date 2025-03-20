@@ -120,9 +120,6 @@ class Game {
   }
 
   Monster getRandomMonster() {
-    if (monsterList.isEmpty) {
-      throw StateError('No monsters available.');
-    }
     return monsterList[Random().nextInt(monsterList.length)];
   } //랜덤으로 몬스터를 불러옴
 
@@ -160,6 +157,10 @@ class Game {
         String name = stats[0]; //첫번째 자리 값을 몬스터 이름으로
         int health = int.parse(stats[1]); //두번째 자리 값을 체력으로
         int attackPowerMax = int.parse(stats[2]); //세번째 자리 값을 최대 공격력으로
+
+        monsterList.add(
+          Monster(name, health, attackPowerMax, character.defensePower),
+        );
       }
     } catch (e) {
       print('몬스터 정보를 불러오는 중 오류가 발생했습니다: $e');
