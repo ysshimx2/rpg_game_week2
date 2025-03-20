@@ -172,6 +172,7 @@ class Game {
         name.isEmpty ||
         !RegExp(r'^[a-zA-Z가-힣]+$').hasMatch(name)) {
       print('잘못된 입력입니다. 한글 또는 영문 대소문자만 입력하세요.');
+      return getCharacterName(); // 재귀 호출로 다시 입력받기
     } else {
       return name;
     }
