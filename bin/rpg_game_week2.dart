@@ -52,3 +52,45 @@ class Monster {
   }
 }
 // 여기까지 몬스터 클래스에 대한 정의
+
+class Game {
+  late Character character;
+  List<Monster> monsterList = [];
+  int monstersToDefeat;
+  int defeatedMonsters = 0;
+
+  Game(this.monstersToDefeat) {
+    loadCharacterStats();
+    loadMonsterStats();
+  }
+
+  void startGame() {
+    print('게임을 시작합니다!');
+    while (character.health > 0 && defeatedMonsters < monstersToDefeat) {
+      Monster monster = getRandomMonster();
+      print('새로운 몬스터가 나타났습니다!');
+      battle(monster);
+
+      if (character.health <= 0) {
+        print('캐릭터가 사망했습니다. 게임을 종료합니다.');
+        saveGameResult("패배");
+        return;
+      }
+
+      if (defeatedMonsters >= monstersToDefeat) {
+        print('축하합니다! 모든 몬스터를 물리쳤습니다.');
+        saveGameResult("승리");
+        return;
+      }
+      stdout.write('다음 몬스터와 싸우시겠습니까? (y/n): ');
+      String? choice = stdin.readLineSync()?.toLowerCase();
+      if (choice != 'y') {
+        print('게임을 종료합니다.');
+        saveGameResult("중도 포기");
+        return;
+      }
+    }
+  }
+}
+
+//게임 시작 및 진행상황에 관한 정의
