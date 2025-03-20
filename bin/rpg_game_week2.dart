@@ -118,4 +118,56 @@ class Game {
       } //몬스터는 살아있는 한 플레이어 공격만, 쓰러지면 리스트에서 제거 및 처지된 몬스터 수 증가
     }
   }
+
+  Monster getRandomMonster() {
+    return monsterList[Random().nextInt(monsterList.length)];
+  } //랜덤으로 몬스터를 불러옴
+
+  void loadCharacterStats() {
+    try {
+      final file = File('character.txt'); //캐릭터 정보 불러올 파일
+      final contents = file.readAsStringSync();
+      final stats = contents.split(',');
+      if (stats.length != 3)
+        throw FormatException('잘못된 캐릭터 정보입니다.'); //캐릭터 정보가 3개가 아닐 경우 예외처리
+
+      int health = int.parse(stats[0]); //첫번째 자리 값을 체력으로
+      int attackPower = int.parse(stats[1]); //두번째 자리 값을 공격력으로
+      int defensePower = int.parse(stats[2]); //세번째 자리 값을 방어력으로
+
+      String name = getCharacterName(); //캐릭터 이름을 입력받음
+      character = Character(name, health, attackPower, defensePower);
+    } catch (e) {
+      print('캐릭터 정보를 불러오는 중 오류가 발생했습니다: $e');
+      exit(1);
+    }
+  }
+  //캐릭터 정보 불러오기
+
+  void loadMonsterStats() {
+    try {
+      final file = File('monsters.txt'); //몬스터 정보 불러올 파일
+      final lines = file.readAsLinesSync();
+
+      for (var line in lines) {
+        final stats = line.split(',');
+        if (stats.length != 3)
+          throw FormatException('잘못된 몬스터 정보입니다.'); //몬스터 정보가 3개가 아닐 경우 예외처리
+
+        String name = stats[0]; //첫번째 자리 값을 몬스터 이름으로
+        int health = int.parse(stats[1]); //두번째 자리 값을 체력으로
+        int attackPowerMax = int.parse(stats[2]); //세번째 자리 값을 최대 공격력으로
+      }
+    } catch (e) {
+      print('몬스터 정보를 불러오는 중 오류가 발생했습니다: $e');
+      exit(1);
+    }
+  }
+  //몬스터 정보 불러오기
+
+  String getCharacterName() {
+    stdout.write('캐릭터의 이름을 입력하세요: ');
+    String? name = stdin.readLineSync();
+    return name ?? '이름 없음';
+  } //캐릭터 이름 입력받기
 }
