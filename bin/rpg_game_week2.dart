@@ -186,7 +186,7 @@ class Game {
     if (choice == 'y') {
       try {
         final file = File('result.txt');
-        file.writeAsSrtingSync(
+        file.writeAsStringSync(
           '캐릭터 이름: ${character.name}\n남은체력: ${character.health}\n게임 결과: $result\n\n',
           mode: FileMode.append,
         );
@@ -197,3 +197,9 @@ class Game {
     }
   }
 } //게임 결과 저장하기
+
+void main() {
+  Game game = Game(2);
+  game.startGame();
+}
+//게임 시작
