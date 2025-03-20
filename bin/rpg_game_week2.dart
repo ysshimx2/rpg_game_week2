@@ -27,3 +27,28 @@ class Character {
   }
 }
 // 여기까지 캐릭터 클래스에 대한 정의
+
+class Monster {
+  String name;
+  int health;
+  int attackPower;
+  final int defensePower = 0;
+
+  Monster(this.name, this.health, int attackPowerMax, int characterDefensePower)
+    : attackPower = max(
+        Random().nextInt(attackPowerMax),
+        characterDefensePower,
+      );
+
+  void attackCharacter(Character character) {
+    int damage = max(attackPower - character.defensePower, 0);
+    character.health -= damage;
+    if (character.health < 0) character.health = 0;
+    print('$name이(가) ${character.name}에게 $attackPower의 데미지를 입혔습니다.');
+  }
+
+  void showStatus() {
+    print('$name - 체력: $health, 공격력: $attackPower');
+  }
+}
+// 여기까지 몬스터 클래스에 대한 정의
