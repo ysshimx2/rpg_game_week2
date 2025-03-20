@@ -176,4 +176,24 @@ class Game {
       return name;
     }
   } //한글 또는 영문 대소문자만 캐릭터 이름으로 입력받기
-}
+
+  //게임 플레이 관련 함수 정의
+
+  void saveGameResult(String result) {
+    stdout.write('결과를 저장하시겠습니까? (y/n): ');
+    String? choice = stdin.readLineSync()?.toLowerCase();
+
+    if (choice == 'y') {
+      try {
+        final file = File('result.txt');
+        file.writeAsSrtingSync(
+          '캐릭터 이름: ${character.name}\n남은체력: ${character.health}\n게임 결과: $result\n\n',
+          mode: FileMode.append,
+        );
+        print('게임 결과가 저장되었습니다.');
+      } catch (e) {
+        print('게임 결과를 저장하는 중 오류가 발생했습니다: $e');
+      }
+    }
+  }
+} //게임 결과 저장하기
