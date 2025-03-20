@@ -120,6 +120,9 @@ class Game {
   }
 
   Monster getRandomMonster() {
+    if (monsterList.isEmpty) {
+      throw StateError('No monsters available.');
+    }
     return monsterList[Random().nextInt(monsterList.length)];
   } //랜덤으로 몬스터를 불러옴
 
