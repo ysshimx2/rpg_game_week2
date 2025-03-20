@@ -63,7 +63,7 @@ class Game {
     loadCharacterStats();
     loadMonsterStats();
   }
-
+  //게임 클래스 정의 및 진행 방식 정의 시작
   void startGame() {
     print('게임을 시작합니다!');
     while (character.health > 0 && defeatedMonsters < monstersToDefeat) {
@@ -89,8 +89,33 @@ class Game {
         saveGameResult("중도 포기");
         return;
         //'n'을 입력하면 게임이 중도 포기처리되며 저장 후 종료
+        //게임 시작 및 진행상황에 관한 정의
       }
     }
   }
+
+  void battle(Monster monster) {
+    while (character.health > 0 && monster.health > 0) {
+      character.showStatus();
+      monster.showStatus();
+
+      stdout.write('행동을 선택하세요 (1: 공격, 2: 방어) :');
+      String? choice = stdin.readLineSync();
+      if (choice == '1') {
+        character.attackMonster(monster);
+      } else if (choice == '2') {
+        character.defend();
+      } else {
+        print('잘못된 입력입니다. 다시 입력해주세요.');
+        continue;
+      } //1선택시 공격, 2선택시 방어, 그 외 입력시 에러 메세지 출력
+      if (monster.health > 0) {
+        monster.attackCharacter(character);
+      } else {
+        print('${monster.name}을(를) 물리쳤습니다!');
+        monsterList.remove(monster);
+        defeatedMonsters++;
+      } //몬스터는 살아있는 한 플레이어 공격만, 쓰러지면 리스트에서 제거 및 처지된 몬스터 수 증가
+    }
+  }
 }
-//게임 시작 및 진행상황에 관한 정의
