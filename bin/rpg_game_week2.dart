@@ -71,6 +71,7 @@ class Game {
     print('게임을 시작합니다!');
     character.showStatus();
     print('');
+
     while (character.health > 0 && defeatedMonsters < monstersToDefeat) {
       Monster monster = getRandomMonster();
       print('새로운 몬스터가 나타났습니다!');
@@ -101,9 +102,9 @@ class Game {
 
   void battle(Monster monster) {
     while (character.health > 0 && monster.health > 0) {
-      //character.showStatus();
       monster.showStatus();
       print('');
+
       print('${character.name}의 턴');
       stdout.write('행동을 선택하세요 (1: 공격, 2: 방어) :');
       String? choice = stdin.readLineSync();
